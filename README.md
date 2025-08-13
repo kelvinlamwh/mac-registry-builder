@@ -10,14 +10,19 @@ A FastAPI-based service for gathering MAC addresses via ARP pings. This project 
 ## Getting Started
 
 ### 1. Install
-```sh
-uv sync
+```console
+> uv sync
 ```
 
 ### 2. Run
-```sh
-uv run main.py
+```console
+> uv run main.py
 ```
 
 ### 3. Use
 Go `http://<IP Address>:5000/probe?key1=value1&key2=value2` on other machines, and see the console
+
+### 4. Package
+```console
+> uvx pyinstaller mac_registry.spec
+```
