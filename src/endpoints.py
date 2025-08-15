@@ -20,10 +20,14 @@ def rev_probe(request: Request, ) -> str:
     logger.debug('Request from [{}], performing ARP ping', ip_req)
     arp_results = arp.do_arp_ping(ip_req)
 
+    logger.success('\n'.join(
+        '{:>15s}:\t{} => {}'.format(ip_req.exploded, mac, ip) for mac, ip in arp_results
+    ))
+
     metadata = sorted((k, v) for k, v in request.query_params.items())
     THE_REGISTER.extend((ipaddr, macaddr, metadata) for macaddr, ipaddr in arp_results)
 
-    return 'Endpoint [{}] registered to [{}]'.format(ip_req, "; ".join('{}={}'.format(k, v) for k, v in metadata))
+    return 'Endpoint [{}] registered to [{}]'.format(ip_req, '; '.join('{}={}'.format(k, v) for k, v in metadata))
 
 @api.get('/')
 def usage() -> str:

@@ -26,7 +26,4 @@ def do_arp_ping(ip_address: IPv4Address):
     if len(noreplies) > 0:
         logger.warning("ARP ping failed for addresses: [{}]", ', '.join(pkt.pdst for pkt in noreplies))
 
-    arp_result_lines = ('{}\t{}'.format(reply.answer.hwsrc, reply.answer.psrc) for reply in answers)
-    logger.success("ARP ping Results:\n\n{}\n\n", '\n'.join(arp_result_lines))
-
     return [(reply.answer.hwsrc, reply.answer.psrc) for reply in answers]
