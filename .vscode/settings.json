@@ -1,5 +1,5 @@
 {
-    "python.analysis.typeCheckingMode": "standard",
+    "python.analysis.typeCheckingMode": "strict",
     "explorer.fileNesting.patterns": {
         "pyproject.toml": "uv.lock, .python-version, *.spec"
     }

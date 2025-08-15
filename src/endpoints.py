@@ -5,11 +5,11 @@ from fastapi import FastAPI, Request
 
 import arp
 
-THE_REGISTER = []
+THE_REGISTER: list[tuple[str, str, list[tuple[str, str]]]] = []
 api = FastAPI()
 
 @api.get("/probe")
-def rev_probe(request: Request, ) -> str:
+def rev_probe(request: Request) -> str:
     requester = request.client
     if requester is None:
         logger.error('Request from unknown client')

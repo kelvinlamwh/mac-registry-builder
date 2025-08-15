@@ -1,9 +1,10 @@
 import logging
 import inspect
+from typing import Any # Fuck that I ain't gonna do this shit by hand
 
 from loguru import logger as loguru
 
-LOGURU_ARGS = {
+LOGURU_ARGS: dict[str, Any] = {
     'format': \
         "<green>{elapsed.seconds}.{elapsed.microseconds:06}</> | <level>{level: <8}</> | {name}:{function}:{line}\n"\
         "{message}\n",
@@ -26,7 +27,7 @@ class LoguruInterceptHandler(logging.Handler):
     )
     loguru.opt(depth = depth, exception = record.exc_info).log(level, record.getMessage())
 
-UVICORN_LOGGING_CONFIG = {
+UVICORN_LOGGING_CONFIG: dict[str, Any] = {
     'version': 1,
     'disable_existing_loggers': True,
     'handlers': {

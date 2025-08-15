@@ -1,4 +1,5 @@
 from ipaddress import IPv4Address
+from typing import cast
 
 from loguru import logger
 
@@ -8,15 +9,17 @@ from scapy.config import conf as scapy_conf
 
 SELF_IP: IPv4Address = None # type: ignore
 
-def get_hwaddr():
+def get_hwaddr() -> tuple[IPv4Address, str]:
     global SELF_IP
 
-    iface, psrc, _ = scapy_conf.route.route(dst = IPv4Address('1.1.1.1').exploded)
-    SELF_IP = IPv4Address(psrc)
+    iface, psrc, _ = cast(tuple[str, str, object],
+        scapy_conf.route.route(dst = IPv4Address('1.1.1.1').exploded) # pyright: ignore[reportUnknownMemberType]
+    )
+    SELF_IP = IPv4Address(psrc) # pyright: ignore[reportConstantRedefinition]
 
-    return psrc, iface
+    return SELF_IP, iface
 
-def do_arp_ping(ip_address: IPv4Address):
+def do_arp_ping(ip_address: IPv4Address) -> list[tuple[str, str]]:
 
     ETHER_BROADCAST = "FF:FF:FF:FF:FF:FF" # I hate strings
     arp_request = Ether(dst = ETHER_BROADCAST) / ARP(psrc = SELF_IP.exploded, pdst = ip_address.exploded) # I really hate strings

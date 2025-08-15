@@ -16,7 +16,12 @@ cli = typer.Typer()
 
 def log_setup(verbose: bool) -> None:
     logger.remove()
-    logger.add(sys.stderr, backtrace = False, diagnose = False, **LOGURU_ARGS, level = 'TRACE' if verbose else 'INFO')
+    logger.add(
+        sys.stderr,
+        backtrace = False, diagnose = False,
+        level = 'TRACE' if verbose else 'INFO',
+        **LOGURU_ARGS,
+    )
 
     logging.basicConfig(handlers = [LoguruInterceptHandler()], level = 0, )
     logging.debug('std Logging rerouted to loguru')
