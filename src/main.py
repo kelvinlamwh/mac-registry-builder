@@ -14,18 +14,21 @@ from arp import get_hwaddr
 
 cli = typer.Typer()
 
-def log_setup(verbose: bool):
+def log_setup(verbose: bool) -> None:
     logger.remove()
     logger.add(sys.stderr, backtrace = False, diagnose = False, **LOGURU_ARGS, level = 'TRACE' if verbose else 'INFO')
 
     logging.basicConfig(handlers = [LoguruInterceptHandler()], level = 0, )
     logging.debug('std Logging rerouted to loguru')
 
+    if not verbose:
+        del UVICORN_LOGGING_CONFIG['loggers']['uvicorn.access']['handlers'][0]
+
 @cli.command()
 def entrypoint(
     port: Annotated[int, typer.Option(help="API Port", metavar="PORT")] = 5000,
     outfile: Annotated[Optional[Path], typer.Option(help="Register output", metavar="PATH")] = None,
-    verbose: Annotated[bool, typer.Option('-v', help="More logging")] = False,
+    verbose: Annotated[bool, typer.Option('--verbose', '-v', help="More logging")] = False,
 ):
     log_setup(verbose)
 
