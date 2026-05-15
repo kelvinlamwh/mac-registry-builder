@@ -37,7 +37,7 @@ def entrypoint(
 ):
     log_setup(verbose)
 
-    logger.debug('Most probable IP Address: [<cyan>{}</>] at [<green>{}</>]', *get_hwaddr())
+    logger.opt(colors=True).debug('Most probable IP Address: [<cyan>{}</>] at [<green>{}</>]', *get_hwaddr())
     logger.trace('ts=[{}], handing over to uvicorn',
         datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f %p %:z').strip()
     )

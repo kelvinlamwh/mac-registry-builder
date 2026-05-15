@@ -24,5 +24,5 @@ Go `http://<IP Address>:5000/probe?key1=value1&key2=value2` on other machines, a
 
 ### 4. Package
 ```console
-> uvx pyinstaller mac_registry.spec
+> uv run --with pyinstaller pyinstaller mac_registry.spec
 ```
