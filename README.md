@@ -16,7 +16,7 @@ A FastAPI-based service for gathering MAC addresses via ARP pings. This project 
 
 ### 2. Run
 ```console
-> uv run main.py
+> uv run src/main.py
 ```
 
 ### 3. Use
